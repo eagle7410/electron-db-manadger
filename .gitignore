@@ -5,3 +5,4 @@
 /db_test/
 /archives/
 .DS_Store
+const/pass.json
