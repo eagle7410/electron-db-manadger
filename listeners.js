@@ -32,7 +32,7 @@ module.exports = {
 			handler: async (res, action) => {
 				try {
 
-					let {pass} = require(sudoPass);
+					let {pass} = await fs.readJson(sudoPass);
 
 					if (!pass) {
 						return send.ok(res, action, {isExistPass : false});

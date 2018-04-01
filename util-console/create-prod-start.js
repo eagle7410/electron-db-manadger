@@ -42,7 +42,7 @@ const createIndex = async () => {
 
 const deletePassFile = async () => {
 	try {
-		await fs.unlink(`${__dirname}/../configs/pass.json`);
+		await fs.writeJsonSync(`${__dirname}/../configs/pass.json`, {pass : ''});
 		log.success('deletePassFile ok.');
 	} catch (err) {
 		log.error('deletePassFile err', err);
