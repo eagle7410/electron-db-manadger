@@ -74,12 +74,37 @@ const correctPackageJson = () => new Promise((ok, bad) => {
 	});
 });
 
+const setInitialConfig = async () => {
+	try {
+		await fs.writeJsonSync(`${__dirname}/../configs/conf.json`, {
+				"installs": {
+					"allReady": false,
+					"images": {
+						"monogo": false,
+						"mysql": false,
+						"phpmyadmin": false
+					},
+					"containers": {
+						"monogo": false,
+						"mysql": false,
+						"phpmyadmin": false
+					}
+				}
+		});
+
+		log.success('setInitialConfig ok.');
+	} catch (err) {
+		log.error('setInitialConfig err', err);
+	}
+}
+
 const createProdStart = async () => {
 	try {
 		await createIndex();
 		await createServer();
 		await deletePassFile();
 		await correctPackageJson();
+		await setInitialConfig();
 
 		log.success('Success ...');
 

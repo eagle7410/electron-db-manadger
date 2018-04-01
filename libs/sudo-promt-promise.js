@@ -1,6 +1,8 @@
+const os = require('os');
+
 class SudoExecCmd {
 	constructor () {
-		this._sudo = require('sudo-js');
+		this._sudo = require(os.platform() === 'linux' ? 'sudo-js' : './cmd');
 		this._pass = null;
 	}
 
