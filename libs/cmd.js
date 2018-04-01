@@ -2,14 +2,14 @@ let cmd = require('node-cmd');
 
 class Cmd {
 	constructor () {
-		this._sudo = cmd;
+		this.cmd = cmd;
 	}
 	setPassword (password) {
 		return this;
 	}
 
 	exec (arCmd, call) {
-		this._sudo.get(arCmd.join(' '), (err, data) => call(err, null, data));
+		this.cmd.get(arCmd.join(' '), (err, data) => call(err, null, data));
 	}
 }
 
