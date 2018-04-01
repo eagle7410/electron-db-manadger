@@ -49,11 +49,37 @@ const deletePassFile = async () => {
 	}
 };
 
+
+const correctPackageJson = () => new Promise((ok, bad) => {
+	const path = root + 'package.json';
+	fs.readFile(path, 'utf8', (err,data) => {
+		if (err) {
+			log.error('correctPackageJson readFile bab', err);
+			return bad();
+		}
+
+		data = data.toString()
+			.replace(/"main"\: "index([^\n])+/, '"main": "index-app.js",');
+
+		fs.writeFile(path, data, err => {
+			if (err) {
+				log.error('correctPackageJson writeFile bab', err);
+				return bad();
+			}
+
+			log.success('correctPackageJson ok');
+			return ok();
+		});
+
+	});
+});
+
 const createProdStart = async () => {
 	try {
 		await createIndex();
 		await createServer();
 		await deletePassFile();
+		await correctPackageJson();
 
 		log.success('Success ...');
 
