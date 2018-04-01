@@ -2,7 +2,7 @@
   "name": "electron-db-manadger",
   "version": "1.0.0",
   "description": "Electron db manadger",
-  "main": "index-app.js",
+  "main": "index-app-dev.js",
   "dependencies": {
     "electron": "1.8.4",
     "fs-extra": "5.0.0",
