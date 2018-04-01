@@ -20,7 +20,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron --harmony-async-await .",
     "pkg-linux": "electron-packager . --overwrite --platform=linux  --arch=x64  --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.png --prune=true --out=app_build",
-    "pkg-win": "electron-packager . --overwrite --asar=true --platform=win32  --arch=ia32 --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.ico --prune=true --out=app_build -version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Electron work jornal'",
+    "pkg-win": "electron-packager . --overwrite --asar=true --platform=win32  --arch=ia32 --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.ico --prune=true --out=app_build -version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Database manadger'",
     "pkg-mac": "electron-packager . --overwrite --platform=darwin --arch=x64  --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.icns --prune=true --out=app_build"
   },
   "repository": {

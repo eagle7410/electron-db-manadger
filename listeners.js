@@ -1,6 +1,7 @@
 const send           = require('./libs/send');
 const {commandParse} = require('./libs/comman-parser');
 const fs             = require('fs-extra');
+const os             = require('os');
 const commands       = require('./configs/docker-commands');
 const SudoExec       = require('./libs/sudo-promt-promise');
 const sudoPass       = `${__dirname}/configs/pass.json`;
@@ -66,7 +67,7 @@ module.exports = {
 				try {
 					let {pass} = data;
 
-					await sudoExec.setPassword(pass).exec(['ls']);
+					await sudoExec.setPassword(pass).exec([os.platform() === 'win32'? 'dir' : 'ls']);
 
 					fs.writeJsonSync(sudoPass, data);
 
@@ -163,6 +164,7 @@ async function checkInstallAll(sudoExec) {
 	}
 
 	for(let container in appConfig.installs.containers) {
+
 		if (!appConfig.installs.containers[container]) {
 			await sudoExec.exec(commands.installs.containers[container]);
 			appConfig.installs.containers[container] = true;
