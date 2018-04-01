@@ -4,30 +4,30 @@ import RaisedButton from 'material-ui/RaisedButton'
 import IconSave from 'material-ui/svg-icons/content/save';
 import {savePass} from '../../api/api';
 import {connect} from 'react-redux';
-import routes  from '../../const/app-routes'
 
 const Password = (state, ) => {
 
-	const handlerSave = () => {
-		let pass = state.store.pass;
+	const handlerSave = async () => {
+		try {
+			let pass = state.store.pass;
 
-		if (!pass) {
-			return state.setErr('Password not empty');
+			if (!pass) {
+				return state.setErr('Password not empty');
+			}
+
+			await savePass(pass);
+
+			state.history.push('/')
+
+		} catch (err) {
+			if (err && err.type === 'badPass') {
+				return state.setErr('Invalid password');
+			}
+
+			console.error(`Error save password`, err);
+
+			state.setErr('Error save password');
 		}
-
-
-		savePass(pass)
-			.then(() => {console.log('YES');state.history.push('/')})
-			.catch(err => {
-
-				if (err && err.type === 'badPass') {
-					return state.setErr('Invalid password');
-				}
-
-				console.error(`Error save password`, err);
-
-				state.setErr('Error save password');
-			});
 	};
 
 	return (

@@ -1,8 +1,4 @@
-import {save, move, update, reqFull, get} from '../utils/Req'
-
-// const add  = name       => reqFull(save, type, name);
-// const del  = id         => reqFull(move, type, id);
-// const edit = (id, name) => reqFull(update, type, {id : id, name : name});
+import {save, reqFull, get} from '../utils/Req'
 
 const init = () => reqFull(get, '/init');
 const savePass = (pass) => reqFull(save, '/pass', {pass});

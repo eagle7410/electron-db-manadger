@@ -1,22 +1,27 @@
 {
   "name": "electron-db-manadger",
   "version": "1.0.0",
-  "description": "",
-  "main": "index-app-dev.js",
+  "description": "Electron db manadger",
+  "main": "index-app.js",
   "dependencies": {
-    "bluebird": "3.5.1",
     "electron": "1.8.4",
-    "electron-devtools-installer": "2.2.3",
     "fs-extra": "5.0.0",
     "sudo-js": "^1.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bluebird": "3.5.1",
+    "console-color": "https://github.com/eagle7410/console-color.git",
+    "electron-devtools-installer": "2.2.3",
+    "electron-packager": "11.2.0",
+    "electron-prebuilt": "1.4.13",
+    "node-cmd": "3.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "pkg-linux": "electron-packager . --overwrite --platform=linux  --arch=x64  --ignore='.jscsrc|/*-dev|create_tingo_db.js|create_repo.sh|.gitignore|/.idea|/db_test|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.png --prune=true --out=app_build",
-    "pkg-win": "electron-packager . --overwrite --asar=true --platform=win32  --arch=ia32 --ignore='.jscsrc|/*-dev|create_tingo_db.js|create_repo.sh|.gitignore|/.idea|/db_test|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.ico --prune=true --out=app_build -version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Electron work jornal'",
-    "pkg-mac": "electron-packager . --overwrite --platform=darwin --arch=x64  --ignore='.jscsrc|/*-dev|create_tingo_db.js|create_repo.sh|.gitignore|/.idea|/db_test|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.icns --prune=true --out=app_build"
+    "start": "electron --harmony-async-await .",
+    "pkg-linux": "electron-packager . --overwrite --platform=linux  --arch=x64  --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.png --prune=true --out=app_build",
+    "pkg-win": "electron-packager . --overwrite --asar=true --platform=win32  --arch=ia32 --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.ico --prune=true --out=app_build -version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Electron work jornal'",
+    "pkg-mac": "electron-packager . --overwrite --platform=darwin --arch=x64  --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.icns --prune=true --out=app_build"
   },
   "repository": {
     "type": "git",

@@ -1,12 +1,13 @@
 const send           = require('./libs/send');
 const {commandParse} = require('./libs/comman-parser');
 const fs             = require('fs-extra');
-const commands       = require('./const/docker-commands')
+const commands       = require('./configs/docker-commands');
 const SudoExec       = require('./libs/sudo-promt-promise');
-const sudoPass       = `${__dirname}/const/pass.json`;
+const sudoPass       = `${__dirname}/configs/pass.json`;
 const sudoExec       = new SudoExec();
 
-let appConfig = require('./const/app');
+let appConfigName = 'conf';
+let appConfig = require(`./configs/${appConfigName}`);
 let containersStatus;
 let password;
 
@@ -31,11 +32,12 @@ module.exports = {
 			handler: async (res, action) => {
 				try {
 
-					if (!fs.existsSync(sudoPass)) {
+					let {pass} = require(sudoPass);
+
+					if (!pass) {
 						return send.ok(res, action, {isExistPass : false});
 					}
 
-					let {pass} = require(sudoPass);
 					password = pass;
 
 					let {result} = await sudoExec.setPassword(pass).exec(commands.dockerVerion);
@@ -168,7 +170,7 @@ async function checkInstallAll(sudoExec) {
 	}
 
 	appConfig.installs.allReady = true;
-	fs.writeJsonSync(`${__dirname}/const/app.json`, appConfig);
+	fs.writeJsonSync(`${__dirname}/configs/${appConfigName}.json`, appConfig);
 
 	return true;
 }

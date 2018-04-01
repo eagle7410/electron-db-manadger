@@ -51,7 +51,7 @@ const ButtomStatus = (state) => {
 			state.change(data);
 
 		} catch (e) {
-			// TODO: Back
+			alert('Error change status')
 		}
 
 	};

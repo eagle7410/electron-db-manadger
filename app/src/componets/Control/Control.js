@@ -11,7 +11,7 @@ const Control = (state) => {
 	return (
 		<Paper zDepth={2}>
 			<Tabs>
-				<Tab icon={<IconStatuses/>} label="Statuses" style={{height: '100px'}}>
+				<Tab icon={<IconStatuses/>} label="Services" style={{height: '100px'}}>
 					<ButtonStatus
 						service="mongo"
 						label="mongo"
