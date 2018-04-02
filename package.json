@@ -4,12 +4,14 @@
   "description": "Electron db manadger",
   "main": "index-app.js",
   "dependencies": {
+    "babel-preset-es2015": "6.24.1",
     "electron": "1.8.4",
     "fs-extra": "5.0.0",
-    "sudo-js": "1.0.2",
-    "node-cmd": "3.0.0"
+    "node-cmd": "3.0.0",
+    "sudo-js": "1.0.2"
   },
   "devDependencies": {
+    "babel-register": "^6.26.0",
     "bluebird": "3.5.1",
     "console-color": "https://github.com/eagle7410/console-color.git",
     "electron-devtools-installer": "2.2.3",
@@ -18,7 +20,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron --harmony-async-await .",
+    "start": "electron --js-flags=\"--harmony-async-await\" .",
     "pkg-linux": "electron-packager . --overwrite --platform=linux  --arch=x64  --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.png --prune=true --out=app_build",
     "pkg-win": "electron-packager . --overwrite --platform=win32  --arch=ia32 --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.ico --prune=true --out=app_build -version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Manadger'",
     "pkg-mac": "electron-packager . --overwrite --platform=darwin --arch=x64  --ignore='.jscsrc|/*-dev|.gitignore|/.idea|/app|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.icns --prune=true --out=app_build"
