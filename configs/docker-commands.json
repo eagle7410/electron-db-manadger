@@ -1,5 +1,6 @@
 {
 	"dockerVerion"        : ["docker", "--version"],
+	"dockerInfo"          : ["docker", "info"],
 	"imagesList"          : ["docker", "images"],
 	"containerListActive" : ["docker", "ps"],
 	"containerListAll"    : ["docker", "ps", "--all"],

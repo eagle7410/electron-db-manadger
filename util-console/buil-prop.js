@@ -1,21 +1,37 @@
-const fs    = require('fs-extra');
-const root  = `${__dirname}/../`;
+const fs = require('fs-extra');
+const os = require('os');
 const {ConsoleColorLog} = require('console-color');
 const log = new ConsoleColorLog();
 
-const rebuildStatic = () => new Promise((ok, bad) => {
-	const cmd     = require('node-cmd');
-	let   prjPath = __dirname + '/..';
+let   prjPath = __dirname + '/..';
+prjPath = prjPath.replace(/\s/g,'\\ ');
 
-	prjPath = prjPath.replace(/\s/g,'\\ ');
+const getCommand = () => {
+	if (os.platform() === 'win32') {
+		throw new Error('Not work with windows')
+		// return `
+		// 	rmdir /s /q "${prjPath}/html"
+		// 	cd ${prjPath}/app
+		// 	export PUBLIC_URL=../html
+		// 	npm run build
+		// 	xcopy ./build ../html /s /e /h
+		// `;
+	}
 
-	cmd.get(
-		`rm -r ${prjPath}/html
+	return `
+		rm -r ${prjPath}/html
         cd ${prjPath}/app
         export PUBLIC_URL=../html 
         npm run build
         cp -R ./build ../html
-        `,
+        `;
+}
+
+const rebuildStatic = () => new Promise((ok, bad) => {
+	const cmd     = require('node-cmd');
+
+	cmd.get(
+		getCommand(),
 		function(err, data, stderr){
 			if (err) {
 				log.error('RebuildStatic bad', err);

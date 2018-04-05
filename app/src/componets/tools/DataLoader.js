@@ -6,6 +6,9 @@ import routes  from '../../const/app-routes'
 import {init} from '../../api/api';
 const DataLoader = (state) => {
 	init().then(res => {
+		if (res.isDockerLoad) {
+			return state.history.push(routes.dockerload);
+		}
 
 		if (res.isExistPass === false) {
 			return state.history.push(routes.pass);
