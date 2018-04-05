@@ -9,6 +9,7 @@ import DataLoader from './componets/tools/DataLoader'
 import NeedDocker from './componets/NeedDocker/NeedDocker'
 import Password from './componets/Password/Password'
 import Control from './componets/Control/Control'
+import DockerLoad from './componets/DockerLoad/DockerLoad'
 
 const App = () => (
 	<div className='App'>
@@ -22,6 +23,7 @@ const App = () => (
 					<Route path={appRoutes.needDocker} component={NeedDocker} />
 					<Route path={appRoutes.pass} component={Password} />
 					<Route path={appRoutes.control} component={Control} />
+					<Route path={appRoutes.dockerload} component={DockerLoad} />
 					<Route path='/' component={DataLoader}/>
 				</Switch>
 			</div>

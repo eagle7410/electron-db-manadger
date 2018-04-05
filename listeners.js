@@ -15,6 +15,20 @@ let password;
 module.exports = {
 	config: () => [
 		{
+			route : '/docker-load',
+			handler :  async (res, action, data) => {
+				try {
+					await sudoExec.setPassword(password).exec(commands.dockerInfo);
+
+					send.ok(res, action, {isDockerLoaded : true});
+
+				} catch (e) {
+					send.ok(res, action, {isDockerLoaded : false});
+				}
+			}
+
+		},
+		{
 			route: '/status',
 			type : send.reqTypes.post,
 			handler: async (res, action, data) => {
@@ -47,6 +61,8 @@ module.exports = {
 						return send.ok(res, action, {isNoDocker : true});
 					}
 
+					await sudoExec.setPassword(pass).exec(commands.dockerInfo);
+
 					if (!appConfig.installs.allReady) {
 						await checkInstallAll(sudoExec);
 					}
@@ -56,6 +72,10 @@ module.exports = {
 					send.ok(res, action, {isStatus : true , statuses : containersStatus});
 
 				} catch (e) {
+					if (e.message && ~e.message.indexOf('Command failed: docker info')) {
+						return send.ok(res, action, {isDockerLoad : true});
+					}
+
 					send.err(res, action, e);
 				}
 			}
