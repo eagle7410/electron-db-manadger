@@ -18,7 +18,7 @@ const includes = async () => {
 
 		let mainWindow = new BrowserWindow({
 			width  : 400,
-			height : 600,
+			height : 620,
 		});
 
 		await server.run(mainWindow);
