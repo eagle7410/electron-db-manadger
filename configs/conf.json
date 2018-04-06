@@ -1,1 +1,1 @@
-{"installs":{"allReady":true,"images":{"monogo":true,"mysql":true,"phpmyadmin":true},"containers":{"monogo":true,"mysql":true,"phpmyadmin":true}}}
+{"installs":{"allReady":false,"images":{"monogo":false,"mysql":false,"phpmyadmin":false},"containers":{"monogo":false,"mysql":false,"phpmyadmin":false}}}
