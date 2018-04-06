@@ -72,11 +72,14 @@ module.exports = {
 					send.ok(res, action, {isStatus : true , statuses : containersStatus});
 
 				} catch (e) {
-					if (e.message && ~e.message.indexOf('Command failed: docker info')) {
+
+				    console.error(e);
+
+					if (e.message && ~e.message.indexOf('docker info')) {
 						return send.ok(res, action, {isDockerLoad : true});
 					}
 
-					send.err(res, action, e);
+					send.err(res, action, e.message ? e.message : e);
 				}
 			}
 		},
