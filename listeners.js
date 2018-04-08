@@ -6,6 +6,10 @@ const commands       = require('./configs/docker-commands');
 const SudoExec       = require('./libs/sudo-promt-promise');
 const sudoPass       = `${__dirname}/configs/pass.json`;
 const sudoExec       = new SudoExec();
+const log            = require('./libs/logger');
+const SocketServer   = require('./libs/socket-server');
+
+let socketServer;
 
 let appConfigName = 'conf';
 let appConfig = require(`./configs/${appConfigName}`);
@@ -13,6 +17,11 @@ let containersStatus;
 let password;
 
 module.exports = {
+	setWindow : window => {
+		socketServer   = new SocketServer(window);
+
+		return module.exports
+	},
 	config: () => [
 		{
 			route : '/docker-load',
@@ -47,6 +56,7 @@ module.exports = {
 			handler: async (res, action) => {
 				try {
 
+
 					let {pass} = await fs.readJson(sudoPass);
 
 					if (!pass) {
@@ -64,6 +74,7 @@ module.exports = {
 					await sudoExec.setPassword(pass).exec(commands.dockerInfo);
 
 					if (!appConfig.installs.allReady) {
+						socketServer.emit('log-add', {mess: 'Run Install...'});
 						await checkInstallAll(sudoExec);
 					}
 
@@ -127,9 +138,14 @@ async function containersActive(sudoExec) {
 		let name = container[container.length - 1 ];
 
 		switch (name) {
-			case 'mongo'   :
-			case 'myadmin' :
-			case 'mysql'   :
+			case 'mongo'         :
+			case 'mysql'         :
+			case 'myadmin'       :
+			case 'redis'         :
+			case 'redis_manager' :
+			case 'postgis'       :
+			case 'postgres'      :
+			case 'pgadmin'       :
 				resilt[name] = true;
 				break;
 		}
@@ -150,48 +166,80 @@ async function checkInstallAll(sudoExec) {
 	for (let image of images) {
 		switch (image[0]) {
 			case 'mongo' :
-				appConfig.installs.images.monogo = true;
+				appConfig.installs.images.mongo = true;
 				break;
 
 			case 'phpmyadmin/phpmyadmin' :
-				appConfig.installs.images.phpmyadmin = true;
+				appConfig.installs.images.myadmin = true;
 				break;
 
 			case 'mysql/mysql-server' :
 				appConfig.installs.images.mysql = true;
 				break;
+			case 'redis' :
+				appConfig.installs.images.redis = true;
+				break;
+			case 'tenstartups/redis-commander' :
+				appConfig.installs.images.redis_manager = true;
+				break;
+			case 'mdillon/postgis' :
+				appConfig.installs.images.postgis = true;
+				break;
+			case 'postgres' :
+				appConfig.installs.images.postgres = true;
+				break;
+			case 'fenglc/pgadmin4' :
+				appConfig.installs.images.pgadmin = true;
+				break;
 		}
 	}
 
+	socketServer.emit('log-add', {mess: 'End get list images'});
+
 	for(let image in appConfig.installs.images) {
 		if (!appConfig.installs.images[image]) {
+
+			socketServer.emit('log-add', {mess: 'Install image ' + image});
+
+			log.add(`Run pull image ${image} cmd:`, commands.installs.images[image]);
 			await sudoExec.exec(commands.installs.images[image]);
 			appConfig.installs.images[image] = true;
+
 		}
+
+		socketServer.emit('log-add', {mess: `Image ${image} be install. ok`});
 	}
 
 	for (let container of containers) {
 		switch (container[container.length - 1 ]) {
-			case 'mongo' :
-				appConfig.installs.containers.monogo = true;
-				break;
+			case 'mongo'         :
+			case 'mysql'         :
+			case 'myadmin'       :
+			case 'redis'         :
+			case 'redis_manager' :
+			case 'postgis'       :
+			case 'postgres'      :
+			case 'pgadmin'       :
 
-			case 'myadmin' :
-				appConfig.installs.containers.phpmyadmin = true;
-				break;
-
-			case 'mysql' :
-				appConfig.installs.containers.mysql = true;
+				appConfig.installs.containers[container[container.length - 1 ]] = true;
 				break;
 		}
 	}
 
+	socketServer.emit('log-add', {mess: 'End get list containers'});
+
 	for(let container in appConfig.installs.containers) {
 
 		if (!appConfig.installs.containers[container]) {
+
+			log.add(`Run create container ${container} cmd:`, commands.installs.containers[container]);
+			socketServer.emit('log-add', {mess: 'Install container ' + container});
+
 			await sudoExec.exec(commands.installs.containers[container]);
 			appConfig.installs.containers[container] = true;
 		}
+
+		socketServer.emit('log-add', {mess: `Container ${container} be install. ok`});
 	}
 
 	appConfig.installs.allReady = true;

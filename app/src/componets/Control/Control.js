@@ -27,6 +27,31 @@ const Control = (state) => {
 						label="phpmyadmin"
 						imgSrc="img/myadmin.png"
 					/>
+					<ButtonStatus
+						service="redis"
+						label="redis"
+						imgSrc="img/redis.png"
+					/>
+					<ButtonStatus
+						service="redis_manager"
+						label="redis_manager"
+						imgSrc="img/redis_manager.png"
+					/>
+					<ButtonStatus
+						service="postgres"
+						label="postgres"
+						imgSrc="img/postgres.png"
+					/>
+					<ButtonStatus
+						service="postgis"
+						label="postgis"
+						imgSrc="img/postgis.png"
+					/>
+					<ButtonStatus
+						service="pgadmin"
+						label="pgadmin4"
+						imgSrc="img/pgadmin.png"
+					/>
 				</Tab>
 				<Tab icon={<IconOther/>} label="other">
 					<h1>Be doit :)</h1>
