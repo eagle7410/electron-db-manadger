@@ -11,6 +11,8 @@ import { createBrowserHistory as createHistory } from 'history';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {ListeningRouter} from './componets/tools/ListeningRouter';
 import {reducer} from './reducers';
+import SocketListen from './componets/tools/SocketListen'
+import Logs from './componets/tools/Logs'
 const browserHistory = createHistory();
 const middleware = routerMiddleware(browserHistory);
 
@@ -19,11 +21,14 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(middlewar
 ReactDOM.render(
 	<BrowserRouter>
 		<Provider store={store}>
-			<ListeningRouter>
-				<MuiThemeProvider>
-					<App/>
-				</MuiThemeProvider>
-			</ListeningRouter>
+			<div>
+				<ListeningRouter>
+					<MuiThemeProvider>
+						<App/>
+					</MuiThemeProvider>
+				</ListeningRouter>
+				<SocketListen><Logs/></SocketListen>
+			</div>
 		</Provider>
 	</BrowserRouter>,
 	document.getElementById('root')

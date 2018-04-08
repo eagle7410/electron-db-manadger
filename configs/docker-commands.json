@@ -6,14 +6,24 @@
 	"containerListAll"    : ["docker", "ps", "--all"],
 	"installs" : {
 		"images": {
-			"monogo"    : ["docker", "pull", "mongo"],
-			"mysql"     : ["docker", "pull", "phpmyadmin/phpmyadmin"],
-			"phpmyadmin": ["docker", "pull", "mysql/mysql-server"]
+			"mongo"         : ["docker", "pull", "mongo"],
+			"mysql"         : ["docker", "pull", "phpmyadmin/phpmyadmin"],
+			"myadmin"       : ["docker", "pull", "mysql/mysql-server"],
+			"redis"         : ["docker", "pull", "redis"],
+			"redis_manager" : ["docker", "pull", "tenstartups/redis-commander"],
+			"postgis"       : ["docker", "pull", "mdillon/postgis"],
+			"postgres"      : ["docker", "pull", "postgres"],
+			"pgadmin"       : ["docker", "pull", "fenglc/pgadmin4"]
 		},
 		"containers": {
-			"monogo"    : ["docker", "run", "--name","mongo", "-p", "27017:27017", "-d", "mongo"],
-			"mysql"     : ["docker", "run", "--name","mysql", "-e", "MYSQL_ROOT_PASSWORD=root123", "-p", "3306:3306", "-d", "mysql"],
-			"phpmyadmin": ["docker", "run", "--name","myadmin", "-d", "--link","mysql:db", "-p", "8080:80", "phpmyadmin/phpmyadmin"]
+			"mongo"         : ["docker", "run", "--name", "mongo", "-p", "27017:27017", "-d", "mongo"],
+			"mysql"         : ["docker", "run", "--name", "mysql", "-e", "MYSQL_ROOT_PASSWORD=root123", "-p", "3306:3306", "-d", "mysql"],
+			"myadmin"       : ["docker", "run", "--name", "myadmin", "-d", "--link","mysql:db", "-p", "8080:80", "phpmyadmin/phpmyadmin"],
+			"redis"         : ["docker", "run", "--name", "redis", "-p", "6379:6379", "-d", "redis"],
+			"redis_manager" : ["docker", "run", "--name", "redis_manager", "-p", "9000:8081", "--link", "redis:redis", "-d", "tenstartups/redis-commander", "--redis-host", "redis"],
+			"postgis"       : ["docker", "run", "--name", "postgis", "-p", "5434:5432", "-e", "POSTGRES_PASSWORD=postgres", "-d", "mdillon/postgis"],
+			"postgres"      : ["docker", "run", "--name", "postgres", "-p", "5433:5432", "--link", "postgis:postgres", "-e", "POSTGRES_PASSWORD=postgres", "-d", "postgres"],
+			"pgadmin"       : ["docker", "run", "--name", "pgadmin", "-p", "5051:5050", "-e", "DEFAULT_USER=pg4@pg.org", "-e", "DEFAULT_PASSWORD=pg1234", "--link", "postgis:postgis", "--link", "postgres:postgres", "-d", "fenglc/pgadmin4"]
 		}
 	}
 }

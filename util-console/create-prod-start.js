@@ -80,14 +80,24 @@ const setInitialConfig = async () => {
 				"installs": {
 					"allReady": false,
 					"images": {
-						"monogo": false,
-						"mysql": false,
-						"phpmyadmin": false
+						"mongo"         : false,
+						"mysql"         : false,
+						"myadmin"       : false,
+						"redis"         : false,
+						"redis_manager" : false,
+						"postgis"       : false,
+						"postgres"      : false,
+						"pgadmin"       : false,
 					},
 					"containers": {
-						"monogo": false,
-						"mysql": false,
-						"phpmyadmin": false
+						"mongo"         : false,
+						"mysql"         : false,
+						"myadmin"       : false,
+						"redis"         : false,
+						"redis_manager" : false,
+						"postgis"       : false,
+						"postgres"      : false,
+						"pgadmin"       : false,
 					}
 				}
 		});
@@ -97,6 +107,14 @@ const setInitialConfig = async () => {
 		log.error('setInitialConfig err', err);
 	}
 }
+const clearLogFile = async () => {
+	const transform = data => new Promise(write => write('This is log file\n'));
+
+	await fileContentChange(root + 'libs/log.txt', root + 'libs/log.txt', transform);
+
+	log.success('Clear log file is ok.');
+
+};
 
 const createProdStart = async () => {
 	try {
@@ -105,6 +123,7 @@ const createProdStart = async () => {
 		await deletePassFile();
 		await correctPackageJson();
 		await setInitialConfig();
+		await clearLogFile();
 
 		log.success('Success ...');
 

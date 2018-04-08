@@ -1,10 +1,10 @@
 const initialState = {
 	isLoad          : true,
-	redirectTo      : false,
 	dockerLoadCount : 1,
 	labelDockerLoad : 'Docker load',
 	labelDockerLoadPoints : '.',
-	err :  '',
+	err  :  '',
+	logs : [],
 };
 
 const dataLoader = (state = initialState, action) => {
@@ -13,8 +13,15 @@ const dataLoader = (state = initialState, action) => {
         case 'MOVE_ERROR' :
             return {
                 ...state,
-                err : ''
+                err : '',
+	            logs : [],
             };
+
+		case 'ADD_LOG' :
+			return {
+				...state,
+				logs : state.logs.concat(action.data.mess)
+			};
 
 		case 'SET_ERROR' :
 			return {
@@ -22,12 +29,7 @@ const dataLoader = (state = initialState, action) => {
 				err : action.data
 			};
 
-		case 'REDIRECT_TO':
-			return {
-				...state,
-				isLoad       : false,
-				redirectTo   : action.redirectTo,
-			};
+
 		case 'DOCKER_LOAD_NEXT_POINT':
 			let count = state.dockerLoadCount;
 			let points;
