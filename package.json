@@ -29,7 +29,7 @@
     "type": "git",
     "url": "git+https://github.com/eagle7410/electron-db-manadger.git"
   },
-  "author": "",
+  "author": "Igor Stcherbina <verycooleagle@gmail.com> (http://github.com/eagle7410)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/eagle7410/electron-db-manadger/issues"
