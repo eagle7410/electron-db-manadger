@@ -1,8 +1,23 @@
 const initialState = {
-	mongo   : false,
-	mysql   : false,
-	myadmin : false,
-	wait    : false
+	mongo         : false,
+	mysql         : false,
+	myadmin       : false,
+	redis         : false,
+	redis_manager : false,
+	postgres      : false,
+	postgis       : false,
+	pgadmin       : false,
+	wait    : false,
+	ports   : {
+		mongo         : 27017,
+		mysql         : 3306,
+		myadmin       : 8080,
+		redis         : 6379,
+		redis_manager : 9000,
+		postgres      : 5433,
+		postgis       : 5434,
+		pgadmin       : 5051,
+	}
 };
 
 const control = (state = initialState, action) => {

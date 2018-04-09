@@ -56,13 +56,16 @@ const ButtomStatus = (state) => {
 
 	};
 
+	const port = state.store.ports[state.service];
+	const portLabel = port ? `PORT: ${port}` : '';
+
 	return (
 		<div style={style}>
 			{img}
 			<RaisedButton
 				className={cls}
 				backgroundColor={bg}
-				label={state.label}
+				label={`${state.label} ${portLabel}`}
 				icon={icon}
 				secondary={secondary}
 				disabled={disabled}

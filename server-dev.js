@@ -20,7 +20,7 @@ const listeners = arConfig => {
 module.exports = {
 	run: async (mainWindow) =>  {
 
-		listeners([require('./listeners')]);
+		listeners([require('./listeners').setWindow(mainWindow)]);
 
 		return true;
 	}
